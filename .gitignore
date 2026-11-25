@@ -6,6 +6,7 @@ worker-*.json
 .env
 .env.*
 !.env.example
+/worker.example.json
 config/*
 !config/worker.example.json
 !config/README.md
