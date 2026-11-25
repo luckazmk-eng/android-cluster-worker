@@ -28,7 +28,7 @@ Agente leve para registrar celulares Android com Termux em um coordenador Androi
 
 ## Instalação
 
-No Termux do celular worker, baixe/clique no script ou execute os comandos abaixo depois de hospedar este repositório no GitHub:
+No Termux do celular worker:
 
 ```bash
 pkg update -y
@@ -41,7 +41,7 @@ O instalador perguntará:
 1. URL pública HTTPS do gateway (ex.: `https://seu-endereco.trycloudflare.com`).
 2. Código de inscrição de uso único emitido pelo servidor principal.
 
-O código é enviado ao endpoint `/enroll` por HTTPS. O instalador não imprime o token recebido.
+O código é enviado ao endpoint `/enroll` por HTTPS. O instalador não imprime o token recebido. O exemplo de configuração versionado fica em `config/worker.example.json`; as credenciais reais são gravadas em `~/android-cluster-worker/worker.json`, que não deve ser publicado.
 
 ## Iniciar / parar
 
@@ -60,7 +60,7 @@ cd ~/android-cluster-worker
 ./update.sh
 ```
 
-O atualizador baixa apenas os arquivos do agente e scripts deste repositório. Ele preserva `worker.json` e `worker_id`.
+O atualizador baixa os arquivos do agente, scripts, dependências e o exemplo `config/worker.example.json`. Ele preserva `worker.json` e `worker_id` locais.
 
 ## Inicialização após reiniciar o Android
 
@@ -82,7 +82,7 @@ chmod +x ~/.termux/boot/start-cluster-worker
 ## Segurança
 
 - Nunca publique `worker.json`, tokens, códigos de inscrição ou logs que possam conter dados sensíveis.
-- O repositório deve ser privado se você adicionar informações internas.
+- O `.gitignore` protege credenciais locais, configurações privadas, bancos de dados, logs, ambientes virtuais, caches e temporários; `config/worker.example.json` permanece versionado.
 - O coordenador deve validar `X-Worker-Id` e `X-Worker-Token`.
 - Exponha publicamente somente as rotas de worker e instalação necessárias. Não exponha `/admin/*`.
 - Use HTTPS no gateway público.

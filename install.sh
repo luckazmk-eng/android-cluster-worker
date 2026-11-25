@@ -3,7 +3,7 @@ set -euo pipefail
 
 REPO_RAW="${REPO_RAW:-https://raw.githubusercontent.com/luckazmk-eng/android-cluster-worker/main}"
 BASE="$HOME/android-cluster-worker"
-mkdir -p "$BASE"
+mkdir -p "$BASE/config"
 cd "$BASE"
 
 echo "== Android Cluster Worker =="
@@ -13,6 +13,7 @@ pkg install -y python curl
 python -m pip install --upgrade pip
 curl -fsSL "$REPO_RAW/requirements.txt" -o requirements.txt
 python -m pip install -r requirements.txt
+curl -fsSL "$REPO_RAW/config/worker.example.json" -o config/worker.example.json
 
 read -r -p "URL HTTPS pública do gateway do cluster: " SERVER
 SERVER="${SERVER%/}"
@@ -42,7 +43,8 @@ unset CODE
 python - "$TMP" "$SERVER" "$BASE/worker.json" <<'PY'
 import json, os, sys
 src, server, dest = sys.argv[1:]
-data = json.load(open(src, encoding="utf-8"))
+with open(src, encoding="utf-8") as source:
+    data = json.load(source)
 if not data.get("worker_id") or not data.get("worker_token"):
     raise SystemExit("Resposta de inscrição inválida.")
 data["server"] = server
@@ -57,7 +59,8 @@ rm -f "$TMP"
 curl -fsSL "$REPO_RAW/worker_agent.py" -o worker_agent.py
 curl -fsSL "$REPO_RAW/start.sh" -o start.sh
 curl -fsSL "$REPO_RAW/stop.sh" -o stop.sh
-chmod 700 start.sh stop.sh
+curl -fsSL "$REPO_RAW/update.sh" -o update.sh
+chmod 700 start.sh stop.sh update.sh
 chmod 600 worker.json
 
 echo

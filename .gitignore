@@ -1,0 +1,38 @@
+# Local enrollment credentials and private configuration
+worker.json
+worker-*.json
+*.token
+*.secret
+.env
+.env.*
+!.env.example
+config/*
+!config/worker.example.json
+!config/README.md
+
+# Databases and local state
+*.db
+*.sqlite
+*.sqlite3
+*.pid
+
+# Logs
+*.log
+logs/
+
+# Python environments, bytecode, and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Temporary and editor files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store

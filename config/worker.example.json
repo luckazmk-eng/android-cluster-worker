@@ -1,0 +1,7 @@
+{
+  "server": "https://GATEWAY_PUBLICO",
+  "worker_id": "PREENCHIDO_PELO_INSTALADOR",
+  "worker_token": "PREENCHIDO_PELO_INSTALADOR",
+  "heartbeat_seconds": 30,
+  "poll_seconds": 10
+}
